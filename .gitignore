@@ -1,0 +1,5 @@
+fast_zero/__pycache__/
+tests/__pycache__/
+
+.coverage
+.python-version
