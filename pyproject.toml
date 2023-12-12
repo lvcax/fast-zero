@@ -10,6 +10,9 @@ python = "3.11.*"
 fastapi = "^0.104.1"
 uvicorn = "^0.24.0.post1"
 pydantic = {extras = ["email"], version = "^2.5.2"}
+sqlalchemy = "^2.0.23"
+pydantic-settings = "^2.1.0"
+alembic = "^1.13.0"
 
 
 [tool.poetry.group.dev.dependencies]
