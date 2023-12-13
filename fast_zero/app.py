@@ -23,7 +23,7 @@ def create_user(user: UserSchema, session: Session = Depends(get_session)):
 
     if db_user:
         raise HTTPException(
-            status_code=400, detail='username alrealdy registered'
+            status_code=400, detail='username already registered'
         )
 
     db_user = User(

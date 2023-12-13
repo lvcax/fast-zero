@@ -26,6 +26,20 @@ def test_create_user(client):
     }
 
 
+def test_create_user_when_user_already_exist(client, user):
+    response = client.post(
+        '/users/',
+        json={
+            'username': 'teste',
+            'email': 'teste@test.com',
+            'password': 'testest'
+        }
+    )
+
+    assert response.status_code == 400
+    assert response.json() == {'detail': 'username already registered'}
+
+
 def test_read_users(client):
     response = client.get('/users/')
 
@@ -57,8 +71,29 @@ def test_update_user(client, user):
     }
 
 
+def test_update_user_that_not_exist(client, user):
+    response = client.put(
+        '/users/2',
+        json={
+            'username': 'bob',
+            'email': 'bob@example.com',
+            'password': 'mynewpassword',
+        },
+    )
+
+    assert response.status_code == 404
+    assert response.json() == {'detail': 'user not found'}
+
+
 def test_delete_user(client, user):
     response = client.delete('/users/1')
 
     assert response.status_code == 200
     assert response.json() == {'detail': 'user deleted'}
+
+
+def test_delete_user_error(client, user):
+    response = client.delete('/users/2')
+
+    assert response.status_code == 404
+    assert response.json() == {'detail': 'user not found'}
