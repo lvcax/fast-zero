@@ -1,5 +1,7 @@
 fast_zero/__pycache__/
 tests/__pycache__/
+migrations/__pycache__/
+routers/__pycache__/
 
 .coverage
 .python-version
