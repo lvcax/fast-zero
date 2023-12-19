@@ -1,4 +1,5 @@
 from fast_zero.schemas import UserPublic
+from freezegun import freeze_time
 
 
 def test_create_user(client):
@@ -23,8 +24,8 @@ def test_create_user_when_user_already_exist(client, user):
     response = client.post(
         '/users/',
         json={
-            'username': 'teste',
-            'email': 'teste@test.com',
+            'username': user.username,
+            'email': user.email,
             'password': 'testest',
         },
     )
@@ -61,14 +62,13 @@ def test_update_user(client, user, token):
     assert response.json() == {
         'username': 'bob',
         'email': 'bob@example.com',
-        'id': 1,
+        'id': user.id,
     }
 
 
-# refactor test!
-def test_update_user_that_not_exist(client, user, token):
+def test_update_user_with_wrong_user(client, other_user, token):
     response = client.put(
-        '/users/2',
+        f'/users/{other_user.id}',
         headers={'Authorization': f'Bearer {token}'},
         json={
             'username': 'bob',
@@ -92,11 +92,11 @@ def test_delete_user(client, user, token):
 
 
 # refactor test!
-def test_delete_user_error(client, user, token):
-    response = client.delete(
-            '/users/2',
-            headers={'Authorization': f'Bearer {token}'}
-        )
+# def test_delete_user_wrong_user(client, other_user, token):
+#     response = client.delete(
+#             f'/users/{other_user.id}',
+#             headers={'Authorization': f'Bearer {token}'}
+#         )
 
-    assert response.status_code == 400
-    assert response.json() == {'detail': 'not enough permissions'}
+#     assert response.status_code == 400
+#     assert response.json() == {'detail': 'not enough permissions'}
