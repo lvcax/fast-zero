@@ -9,3 +9,4 @@ fast_zero/routers/__pycache__/
 .ruff-cache
 htmlcov
 database.db
+.env
