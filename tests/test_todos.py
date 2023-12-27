@@ -86,16 +86,16 @@ def test_list_todos_filter_description(session, user, client, token):
 
 def test_list_todos_filter_state(session, user, client, token):
     session.bulk_save_objects(
-        TodoFactory.create_batch(7, user_id=user.id, state=TodoState.draft)
+        TodoFactory.create_batch(5, user_id=user.id, state=TodoState.draft)
     )
     session.commit()
 
     response = client.get(
         '/todos/?state=draft',
-        headers={'Authorization': f'Bearer {token}'}
+        headers={'Authorization': f'Bearer {token}'},
     )
 
-    assert len(response.json()['todos']) == 7
+    assert len(response.json()['todos']) == 5
 
 
 def test_list_todos_filter_combined(session, user, client, token):

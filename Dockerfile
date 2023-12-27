@@ -11,3 +11,7 @@ RUN poetry install --no-interaction --no-ansi
 
 EXPOSE 8000
 CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "fast_zero.app:app" ]
+
+COPY entrypoint.sh .
+ENTRYPOINT ["./entrypoint.sh"]
+RUN ["chmod", "+x", "./entrypoint.sh"]
